@@ -109,6 +109,15 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+REST_FRAMEWORK = {
+    # Existing configuration...
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'movies.authentication.GhibliApiKeyAuthentication',
+        # Add other authentication classes if needed
+    ],
+    # Existing configuration...
+}
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -141,3 +150,6 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
 GHIBLI_API_BASE_URL = 'https://ghibli.rest'
 GHIBLI_API_MOVIES_ENDPOINT = '/films'
 GHIBLI_API_PEOPLE_ENDPOINT = '/people'
+
+GHIBLI_API_KEY = 'QAZWSXEDCRFVTGBYHNUJMIKOL!)(@*#&$^%)'
+
