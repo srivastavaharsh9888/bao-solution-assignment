@@ -10,7 +10,7 @@ class MovieViewSet(viewsets.ReadOnlyModelViewSet):
     """
     A simple ViewSet for viewing movies.
     """
-    queryset = Movie.objects.all()
+    queryset = Movie.objects.all().order_by('-release_date')
     serializer_class = MovieSerializer
 
     # Cache the results of the `list` action for 1 minute (60 seconds)
