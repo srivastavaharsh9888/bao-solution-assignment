@@ -1,18 +1,35 @@
-# bao-solution-assignment
-<img width="1710" alt="Screenshot 2023-11-19 at 8 31 18 AM" src="https://github.com/srivastavaharsh9888/bao-solution-assignment/assets/22855779/90ecafc3-55ee-4154-b349-9762fe4cc9c5">
+# BAO Solution Assignment
 
+![Screenshot](https://github.com/srivastavaharsh9888/bao-solution-assignment/assets/22855779/90ecafc3-55ee-4154-b349-9762fe4cc9c5)
 
+This project is a Django application that interfaces with the Ghibli API to fetch and display movie information. It uses Celery with Redis for task management and scheduling.
 
-To run the assignment ensure to have redis running locally, celery worker and celery-django-beat successfully installed on your system.
+## Getting Started
 
-to run celery-beat-:
-<br>
-celery -A baomovie beat --scheduler django_celery_beat.schedulers:DatabaseScheduler
+### Prerequisites
 
-to run celery worker-:
-<br>
-celery -A baomovie  worker --loglevel=info 
+Before running the application, ensure you have the following installed:
+- Redis (running locally)
+- Celery
+- Django Celery Beat
 
-to run server-:
-<br>
-python3 manage.py runserver
+### Running the Application
+
+- **Start Celery Beat**
+  ```bash
+  celery -A baomovie beat --scheduler django_celery_beat.schedulers:DatabaseScheduler
+
+- **To run celery worker:**
+  ```bash
+  celery -A baomovie worker --loglevel=info
+
+- To run server use-:
+  ```bash
+  python3 manage.py runserver
+
+### Improvements:
+
+- Move the secret key to .env file.
+- Create API docs using Swagger.
+- For saving movie and people data we should be doing it through serializers as in task I am writing custom code.
+- We can also implement pagination to get faster and limited response but while including pagination we need to take care of caching like what should be the data structure for storing pagination response and if any new video is added then we need to refresh the cache or mark that as outdated.
