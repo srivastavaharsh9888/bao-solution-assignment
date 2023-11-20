@@ -33,3 +33,4 @@ Before running the application, ensure you have the following installed:
 - Create API docs using Swagger.
 - For saving movie and people data we should be doing it through serializers as in task I am writing custom code.
 - We can also implement pagination to get faster and limited response but while including pagination we need to take care of caching like what should be the data structure for storing pagination response and if any new video is added then we need to refresh the cache or mark that as outdated.
+- Test cases also need to be added.
