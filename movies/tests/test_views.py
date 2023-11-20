@@ -78,17 +78,6 @@ class MovieViewSetTest(APITestCase):
         response1 = self.client.get(self.list_url)
         first_content = response1.content
 
-        # Wait for a short time (less than cache duration)
-        time.sleep(1)  # Adjust the sleep time as needed
-
-
-        # Make the second request
-        response2 = self.client.get(self.list_url)
-        second_content = response2.content
-
-        # Compare the responses; they should be the same if caching works
-        self.assertEqual(first_content, second_content)
-
         # Make a change that should affect the response
         Movie.objects.create(id="m4563",
             title="Sample Movie 2",
@@ -103,8 +92,19 @@ class MovieViewSetTest(APITestCase):
             running_time="240",
             rt_score="97",
             url="http://example2.com/movie")  # Create a new movie
+        
+        # Wait for a short time (less than cache duration)
+        time.sleep(1)  # Adjust the sleep time as needed
 
-        time.sleep(62)  # Adjust the sleep time as needed
+        # Make the second request
+        response2 = self.client.get(self.list_url)
+        second_content = response2.content
+
+        # Compare the responses; they should be the same if caching works
+        self.assertEqual(first_content, second_content)
+        
+        #invalidate the cache
+        time.sleep(62) 
         response2 = self.client.get(self.list_url)
         second_content = response2.content
         self.assertNotEqual(first_content, second_content)
