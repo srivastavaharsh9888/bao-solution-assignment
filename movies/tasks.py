@@ -3,6 +3,7 @@ from celery import shared_task
 from django.conf import settings
 from .models import Movie, Actor
 import logging
+from django.core.cache import cache
 
 logger = logging.getLogger(__name__)
 
@@ -73,7 +74,7 @@ def fetch_movies_from_ghibli():
         actor_ids = [url.split('=')[-1] for url in movie_data['people'] if url]
         actors = Actor.objects.filter(id__in=actor_ids)
         movie.actors.set(actors)
-
+    cache.clear()
     print("Movies and actors data fetched from Ghibli API")
 
     
@@ -104,5 +105,6 @@ def fetch_people_from_ghibli():
         if not actor._state.adding:
             actors_to_update_or_create.append(actor)
 
-    Actor.objects.bulk_update(actors_to_update_or_create, ['name', 'gender', 'age', 'eye_color', 'hair_color', 'species_url', 'url'])        
+    Actor.objects.bulk_update(actors_to_update_or_create, ['name', 'gender', 'age', 'eye_color', 'hair_color', 'species_url', 'url'])       
+    cache.clear() 
     print("Actors Data updates")
